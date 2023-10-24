@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exchange Rate API</title>
+</head>
+<body>
+
+<script>
+    // Paste your Python script here
+    function getExchangeRates() {
+        const url = 'https://api.bnm.gov.my/public/exchange-rate';
+        const headers = {
+            'Sec-Ch-Ua': '"Not:A-Brand";v="99", "Chromium";v="112"',
+            'Accept': 'application/vnd.BNM.API.v1+json',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5615.50 Safari/537.36',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Origin': 'https://apikijangportal.bnm.gov.my',
+            'Sec-Fetch-Site': 'same-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'empty',
+            'Referer': 'https://apikijangportal.bnm.gov.my/',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Connection': 'close'
+        };
+
+        const params = {
+            'session': '0900',
+            'quote': 'rm'
+        };
+
+        fetch(`${url}?session=${params.session}&quote=${params.quote}`, {
+            method: 'GET',
+            headers: headers
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(`Error: ${error}`);
+        });
+    }
+
+    // Call the function to get exchange rates
+    getExchangeRates();
+</script>
+
+</body>
+</html>
