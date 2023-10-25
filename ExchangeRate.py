@@ -26,6 +26,19 @@ response = requests.get(url, headers=headers, params=params)
 
 if response.status_code == 200:
     data = response.json()
-    print(data)
-else:
-    print(f"Error: {response.status_code}")
+  # Extracting SGD rate
+    sgd_rate = None
+    for currency_data in data['data']:
+        if currency_data['currency_code'] == 'SGD':
+            sgd_rate = currency_data['rate']
+            break
+    
+    if sgd_rate is not None:
+        print(f"SGD Selling Rate: {sgd_rate['date']}")
+        print(f"SGD Buying Rate: {sgd_rate['buying_rate']}")
+        print(f"SGD Selling Rate: {sgd_rate['selling_rate']}")
+        print(f"SGD Middle Rate: {sgd_rate['middle_rate']}")
+        
+    else:
+        print("SGD not found in the response.")
+        print(f"Error: {response.status_code}")
